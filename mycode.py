@@ -62,8 +62,27 @@ def create_samples(processed_sentences, samples=50000):
     random_slice = random.randint(0, (len(five_grams)-samples))
     samples = five_grams[random_slice:random_slice+samples]
 
-    return samples
+    all_samples = []
+    for pair1, pair2, pair3, pair4, pair5 in samples:
+        word1 = get_ending(pair1[0])
+        word2 = get_ending(pair2[0])
+        word4 = get_ending(pair4[0])
+        word5 = get_ending(pair5[0])
+        POS = pair3[1]
 
+        if "V" in POS:
+            verb = 1
+        else:
+            verb = 0
+    
+        sample = ((word1, word2, word4, word5), verb)
+        all_samples.append(sample)        
+
+    return all_samples
+
+def get_ending(word):
+    ending = word[-2:]
+    return ending
 
 
 
@@ -77,3 +96,5 @@ if __name__ == "__main__":
 
     all_samples = create_samples(processed_sentences, samples=50000)
     print(all_samples[25000:25010])
+
+    print(get_ending('quickly'))
