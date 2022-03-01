@@ -9,6 +9,7 @@ import pandas as pd
 import nltk
 nltk.download('stopwords')
 nltk.download('averaged_perceptron_tagger')
+from sklearn.svm import SVC
 
 
 def sample_lines(zipped_file, lines=100000):
@@ -121,7 +122,6 @@ def create_df(all_samples):
 
 def split_samples(fulldf, test_percent=20):
     column_number = len(fulldf.columns)
-    print(column_number)
     full_X = fulldf.iloc[:, 0:column_number-2]
     full_y = fulldf.iloc[:, column_number-1]
     
@@ -134,6 +134,19 @@ def split_samples(fulldf, test_percent=20):
     test_y = full_y[:cutoff]
 
     return train_X, train_y, test_X, test_y
+
+def train(train_X, train_y, kernel='linear'):
+    if kernel == 'linear':
+        machine = SVC(kernel='linear')
+    elif kernel == 'rbf':
+        machine = SVC(kernel='rbf')
+    else:
+        return
+    machine.fit(train_X, train_y)
+    
+    return machine
+
+
 
 if __name__ == "__main__":
     sampled_lines = sample_lines(r"C:\Users\turti\OneDrive\Dokumenty\GitHub\machine_learning\UN-english.txt.gz", lines=10000)
@@ -151,3 +164,11 @@ if __name__ == "__main__":
 
     train_X, train_y, test_X, test_y = split_samples(fulldf, test_percent=20)
     print(len(train_X), len(train_y), len(test_X), len(test_y)) 
+
+    model_linear = train(train_X, train_y, kernel='linear')
+    model_rbf = train(train_X, train_y, kernel="rbf")
+    print(model_linear)
+    print(model_rbf)
+
+    print(model_linear.predict(test_X))
+    print(model_rbf.predict(test_X))
