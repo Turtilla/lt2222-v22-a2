@@ -4,13 +4,13 @@ For implementing randomness in the sample_lines() function I made use of the [ra
 ### Part 6
 In this part I got the following results while running the script through the notebook on the mltgpu server - but of course there is randomness to it so the results cannot be repeated.
 >For the model SVC(kernel='linear') the following scores were obtained:      
->	precision = 0.532258064516129    
->	recall = 0.039663461538461536    
->	f1 score = 0.07382550335570469   
+>>	precision = 0.532258064516129    
+>>	recall = 0.039663461538461536    
+>>	f1 score = 0.07382550335570469   
 >For the model SVC() the following scores were obtained:    
->	precision = 0.8441558441558441    
->	recall = 0.078125     
->	f1 score = 0.14301430143014301      
+>>	precision = 0.8441558441558441    
+>>	recall = 0.078125     
+>>	f1 score = 0.14301430143014301      
 
 The latter one is the rbf model, but since rbf is the default setting of SVC(), it does not show up in the description. It is also worth noting that training the models on such big training sets took about 2h, so do not be alarmed if it does not instantly work.   
 
@@ -23,9 +23,9 @@ For this part I chose to use the [nearest neighbors classification] (https://sci
 
 >The model's evaluation:   
 >For the model NearestCentroid() the following scores were obtained:   
->        precision = 0.25585798816568045   
->        recall = 0.6676961087090797   
->        f1 score = 0.3699520876112251      
+>>       precision = 0.25585798816568045   
+>>        recall = 0.6676961087090797   
+>>        f1 score = 0.3699520876112251      
 
 It is also quite interesting that it seems that this way of classifying the samples was much, much faster.   
 
