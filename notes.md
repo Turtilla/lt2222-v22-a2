@@ -3,14 +3,14 @@ For implementing randomness in the sample_lines() function I made use of the [ra
 
 ### Part 6
 In this part I got the following results while running the script through the notebook on the mltgpu server - but of course there is randomness to it so the results cannot be repeated.
-`For the model SVC(kernel='linear') the following scores were obtained:`   
-	`precision = 0.532258064516129` 
-	`recall = 0.039663461538461536` 
-	`f1 score = 0.07382550335570469`
-`For the model SVC() the following scores were obtained:` 
-	`precision = 0.8441558441558441` 
-	`recall = 0.078125` 
-	`f1 score = 0.14301430143014301`   
+>For the model SVC(kernel='linear') the following scores were obtained:   
+>	precision = 0.532258064516129 
+>	recall = 0.039663461538461536 
+>	f1 score = 0.07382550335570469
+>For the model SVC() the following scores were obtained: 
+>	precision = 0.8441558441558441 
+>	recall = 0.078125 
+>	f1 score = 0.14301430143014301`   
 
 The latter one is the rbf model, but since rbf is the default setting of SVC(), it does not show up in the description. It is also worth noting that training the models on such big training sets took about 2h, so do not be alarmed if it does not instantly work.   
 
@@ -21,11 +21,11 @@ _EXPLANATION_
 ### Bonus Part
 For this part I chose to use the [nearest neighbors classification] (https://scikit-learn.org/stable/modules/neighbors.html#nearest-neighbors-classification) class from sklearn. I implemented it in mycode.py analogously to the train() function, but under the name of train_neighbors(). You can test how it works by running the script called high_pass.py from the command line with one command line argument: the name of or path to the file. For instance, when running this on mltgpu, I entered the following in the command line to get it to work: `python3 high_pass.py /scratch/UN-english.txt.gz`. This should print you more or less all the results like in the notebook, with the exception of using the NearestCentroid() class from sklearn instead of the SVC() models. The results I got from running it on mltgpu were the following:   
 
-`The model's evaluation:
-For the model NearestCentroid() the following scores were obtained:
-        precision = 0.25585798816568045
-        recall = 0.6676961087090797
-        f1 score = 0.3699520876112251`   
+>The model's evaluation:
+>For the model NearestCentroid() the following scores were obtained:
+>        precision = 0.25585798816568045
+>        recall = 0.6676961087090797
+>        f1 score = 0.3699520876112251   
 
 It is also quite interesting that it seems that this way of classifying the samples was much, much faster.   
 
