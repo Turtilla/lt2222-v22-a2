@@ -1,1 +1,0 @@
-scp -P62266 gusszawma@mltgpu.flov.gu.se:/scratch/UN-english.txt.gz C:\Users\turti\OneDrive\Dokumenty\GitHub
