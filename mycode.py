@@ -1,5 +1,6 @@
 import gzip
 import random
+import math
 from nltk.tokenize import WordPunctTokenizer
 from nltk.corpus import stopwords
 from nltk.util import ngrams
@@ -98,6 +99,7 @@ def create_df(all_samples):
                 possible_columns_set.add(ending)
     possible_columns.append('verb')
     
+    random.shuffle(all_samples) # to make sure that there is less bias
     sample_vectors = []
     for sample in all_samples:
         endings = sample[0]
@@ -117,7 +119,21 @@ def create_df(all_samples):
 
     return vector_df
 
+def split_samples(fulldf, test_percent=20):
+    column_number = len(fulldf.columns)
+    print(column_number)
+    full_X = fulldf.iloc[:, 0:column_number-2]
+    full_y = fulldf.iloc[:, column_number-1]
+    
+    row_number = len(fulldf)
+    cutoff = math.ceil(row_number * (test_percent / 100))
+    
+    train_X = full_X[cutoff:]
+    train_y = full_y[cutoff:]
+    test_X = full_X[:cutoff]
+    test_y = full_y[:cutoff]
 
+    return train_X, train_y, test_X, test_y
 
 if __name__ == "__main__":
     sampled_lines = sample_lines(r"C:\Users\turti\OneDrive\Dokumenty\GitHub\machine_learning\UN-english.txt.gz", lines=10000)
@@ -132,3 +148,6 @@ if __name__ == "__main__":
 
     fulldf = create_df(all_samples)
     print(fulldf[2500:2510])
+
+    train_X, train_y, test_X, test_y = split_samples(fulldf, test_percent=20)
+    print(len(train_X), len(train_y), len(test_X), len(test_y)) 
