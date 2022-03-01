@@ -1,0 +1,33 @@
+import sys
+import mycode as mc
+
+file_name = sys.argv[1]
+
+sampled_lines = mc.sample_lines(file_name, lines=100000)
+print("Number of lines sampled and an example:")
+print(len(sampled_lines))
+print(sampled_lines[40000:40010])
+print()
+processed_sentences = mc.process_sentences(sampled_lines)
+print("An example of processed sentences:")
+print(processed_sentences[40000:40010])
+print()
+all_samples = mc.create_samples(processed_sentences, samples=50000)
+print("The number of the samples and an example of created samples:")
+print(len(all_samples))
+print(all_samples[25000:25010])
+print()
+fulldf = mc.create_df(all_samples)
+print("An example of the DataFrame:")
+print(fulldf[25000:25010])
+print()
+train_X, train_y, test_X, test_y = mc.split_samples(fulldf, test_percent=20)
+print("The lengths of the training x, training y, test x, and test y")
+print(len(train_X), len(train_y), len(test_X), len(test_y)) 
+print()
+print("The trained model:")
+model_nearest_neighbors = mc.train_neighbors(train_X, train_y)
+print(model_nearest_neighbors)
+print()
+print("The model's evaluation:")
+mc.eval_model(model_nearest_neighbors, test_X, test_y)

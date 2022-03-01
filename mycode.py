@@ -10,7 +10,8 @@ import nltk
 nltk.download('stopwords')
 nltk.download('averaged_perceptron_tagger')
 from sklearn.svm import SVC
-
+from sklearn.neighbors import NearestCentroid
+import sklearn.metrics as skm
 
 def sample_lines(zipped_file, lines=100000):
     unzipped_file = gzip.open(zipped_file, "rb")
@@ -146,6 +147,20 @@ def train(train_X, train_y, kernel='linear'):
     
     return machine
 
+def train_neighbors(train_X, train_y):
+    machine = NearestCentroid()
+    machine.fit(train_X, train_y)
+    
+    return machine
+
+def eval_model(model, test_X, test_y):
+    pred_y = model.predict(test_X)
+    precision = skm.precision_score(test_y, pred_y)
+    recall = skm.recall_score(test_y, pred_y)
+    f1 = skm.f1_score(test_y, pred_y)
+
+    model_name = str(model)
+    print(f"For the model {model} the following scores were obtained: \n\tprecision = {precision} \n\trecall = {recall} \n\tf1 score = {f1}")
 
 
 if __name__ == "__main__":
@@ -170,5 +185,9 @@ if __name__ == "__main__":
     print(model_linear)
     print(model_rbf)
 
-    print(model_linear.predict(test_X))
-    print(model_rbf.predict(test_X))
+    eval_model(model_linear, test_X, test_y)
+    eval_model(model_rbf, test_X, test_y)
+
+    model_nearest_neighbors = train_neighbors(train_X, train_y)
+    print(model_nearest_neighbors)
+    eval_model(model_nearest_neighbors, test_X, test_y)
