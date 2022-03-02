@@ -1,8 +1,12 @@
 ### Part 1
 For implementing randomness in the sample_lines() function I made use of the [random](https://docs.python.org/3/library/random.html) module from the Python Standard Library. Using the randint() function from that module, I generate a number Y from 0 to X, where X is the total number of lines minus the desired number of lines. Then I use that generated number Y to be the start of the slice, and that number Y plus the desired number of lines as the end. _Note that the constraint on generating the number Y is due to it otherwise potentially leading to an IndexError if Y + desired number of lines exceeded the length of the file, so to say._
 
+### Part 3
+I just wanted to remark here that I shuffled the samples before putting them in the dataframe (but after having based the columns on them). I wanted to do this to avoid any bias resulting from the fact that they come in the order in which they were found in the text. Since I only shuffle the order of the vectors and not their contents, they still represent the same samples, it is just the order of the samples that is changed.
+
 ### Part 6
-In this part I got the following results while running the script through the notebook on the mltgpu server - but of course there is randomness to it so the results cannot be repeated.
+In this part I got the following results while running the script through the notebook on the mltgpu server - but of course there is randomness to it so the results cannot be repeated. These results can be found in the python notebook in the repo.   
+
 >For the model SVC(kernel='linear') the following scores were obtained:      
 >	precision = 0.532258064516129    
 >	recall = 0.039663461538461536    
@@ -19,7 +23,7 @@ Straight out of the gate it is visible that the radial basis function model perf
 As explained in on [sklearn's website](https://scikit-learn.org/stable/modules/svm.html), and from the lectures, I understand that having a linear kernel in the support vector machine means that the divisions go more or less by straight lines, while the RBF kernel allows it to "draw curves" through the data (if we think of it visually). I think this may be the reason why the RBF (default) kernel machine did two times better than the linear one. This also implies that in this sample the data is not distributed in a linear fashion. This could also be why the model fails to detect many actual verbs, because there is little pattern to be found in the training data (but whatever there is, works better with a non-linear model).
 
 ### Bonus Part
-For this part I chose to use the [nearest neighbors classification](https://scikit-learn.org/stable/modules/neighbors.html#nearest-neighbors-classification) class from sklearn. I implemented it in mycode.py analogously to the train() function, but under the name of train_neighbors(). You can test how it works by running the script called high_pass.py from the command line with one command line argument: the name of or path to the file. For instance, when running this on mltgpu, I entered the following in the command line to get it to work: `python3 high_pass.py /scratch/UN-english.txt.gz`. This should print you more or less all the results like in the notebook, with the exception of using the NearestCentroid() class from sklearn instead of the SVC() models. The results I got from running it on mltgpu were the following:   
+For this part I chose to use the [nearest neighbors classification](https://scikit-learn.org/stable/modules/neighbors.html#nearest-neighbors-classification) class from sklearn. I implemented it in mycode.py analogously to the train() function, but under the name of train_neighbors(). You can test how it works by running the script called high_pass.py from the command line with one command line argument: the name of or path to the file. For instance, when running this on mltgpu, I entered the following in the command line to get it to work: `python3 high_pass.py /scratch/UN-english.txt.gz`. This should print you more or less all the results like in the notebook, with the exception of using the NearestCentroid() class from sklearn instead of the SVC() models. The results I got from running it on mltgpu were the following:       
 
 >The model's evaluation:   
 >For the model NearestCentroid() the following scores were obtained:   
